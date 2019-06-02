@@ -1,0 +1,61 @@
+#include<stdio.h>
+void nhapMang(int a[], int n)
+{
+	for(int i=0;i<n;i++)
+		{
+
+			scanf("%d", &a[i]);
+		}
+}
+
+
+void gopMang(int a[], int m, int b[], int n, int c[],int &d)
+{
+    d=m+n;
+    for(int i=0; i<d; i++)
+    {
+        if (i<n)
+            c[i]=a[i];
+        else  c[i]=b[i-n];
+    }
+    for (int i=0;i<d;i++)
+        printf("%5d",c[i]);
+}
+void SapXep(int c[], int d)
+{
+	for(int i=0;i<d-1;i++)
+			for(int j=i+1;j<d;j++)
+				{
+					if(c[i]>c[j])
+						{
+							int TrungGian;
+							TrungGian=c[i];
+							c[i]=c[j];
+							c[j]=TrungGian;
+						}
+				}
+
+}
+void xuatmang(int c[],int d)
+{
+	 printf("\nNoi dung day la: \n");
+    for (int i=0;i<d;++i)
+        printf("%5d",c[i]);
+}
+int main()
+{
+	int n, m, d, a[20], b[20], c[40];
+	d=m+n;
+	printf("nhap so phan tu mang A:");
+	scanf("%d",&n);
+	nhapMang(a,n);
+	printf("nhap so phan tu mang B:");
+	scanf("%d",&m);
+	nhapMang(b,m);
+	gopMang(a,m,b,n,c,d);
+	xuatmang(c,d);
+	SapXep(c,d);
+	xuatmang(c,d);
+    return 0;
+
+}
