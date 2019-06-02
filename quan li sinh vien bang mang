@@ -1,0 +1,165 @@
+g #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h>
+struct sinhvien
+{
+    char msv[10];
+    char hoten[32];
+    int tuoi;
+    char lop[10];
+}sv[100];
+int n;
+void nhap()
+{
+    printf("Nhap so luong sv:\n");
+    scanf("%d", &n);
+    for(int i=0;i<n;i++)
+    {
+        printf("Nhap sinh vien thu %d\n", i+1);
+        printf("MSV:");
+        fflush(stdin);
+        gets(sv[i].msv);
+        printf("Ho ten:");
+        fflush(stdin);
+        gets(sv[i].hoten);
+        printf("Tuoi:");
+        scanf("%d", &sv[i].tuoi);
+        printf("Lop:");
+        fflush(stdin);
+        gets(sv[i].lop);
+    }
+}
+void xuat()
+{
+    printf("\t\t\tDANH SACH SINH VIEN\n");
+    printf("MSV\t\t\tHO TEN\t\tTUOI\tLOP\n");
+    for(int i=0;i<n;i++)
+    {
+        printf("%s\t\t\t%s\t\t%d\t%s\n", sv[i].msv, sv[i].hoten, sv[i].tuoi, sv[i].lop);
+    }
+}
+void HoanViChuoi(char s1[], char s2[])
+{
+    char t[32];
+    strcpy(t,s1);
+    strcpy(s1,s2);
+    strcpy(s2,t);
+}
+void HoanVi(int x, int y)
+{
+    int t;
+    t=x;
+    x=y;
+    y=t;
+}
+
+void sapxep_theoma(int n)
+{
+    for (int i=0;i<n-1;i++)
+    for(int j=i+1;j<n;j++)
+    {
+       if ((strcmp(sv[j].msv,sv[i].msv) )<0)
+      {
+            HoanViChuoi(sv[i].msv,sv[j].msv);
+            HoanViChuoi(sv[i].hoten,sv[j].hoten);
+            HoanVi(sv[i].tuoi,sv[j].tuoi);
+            HoanViChuoi(sv[i].lop,sv[j].lop);
+        }
+    }
+    xuat();
+}
+int tim_theoten()
+{
+    char timten[32];
+    int a=1;
+    do
+    {
+    printf("Nhap ten sinh vien can tim:\n");
+    fflush(stdin);
+    gets(timten);
+    for(int i=0;i<n;i++)
+    {
+        if(strcmp(sv[i].hoten,timten)==0)
+        {
+            printf("MSV\t\t\tHO TEN\t\tTUOI\tLOP\n");
+            printf("%s\t\t\t%s\t\t%d\t%s\n", sv[i].msv, sv[i].hoten, sv[i].tuoi, sv[i].lop);
+            break;
+        }
+
+        if(i==n)
+        {
+            printf("Khong tim thay!!!\n");
+        }
+    }
+    printf("Co tiep tuc tim nua khong???\n1. Co\n2. Khong");
+    scanf("%d", &a);
+    }while(a==1);
+}
+int tim_theoma()
+{
+    char timma[10];
+    int a=1;
+    do{
+    printf("Nhap ma sinh vien can tim:\n");
+    fflush(stdin);
+    gets(timma);
+    for(int i=0;i<n;i++)
+    {
+        if(strcmp(sv[i].msv,timma)==0)
+        {
+            printf("MSV\t\t\tHO TEN\t\t\t\t\t\tTUOI\t\t\t\t\t\tLOP\n");
+            printf("%s\t\t\t%s\t\t\t%d\t%s\n", sv[i].msv, sv[i].hoten, sv[i].tuoi, sv[i].lop);
+            break;
+        }
+
+
+    if(i==n)
+    {
+        printf("Khong tim thay!!!\n");
+    }
+ }
+    printf("Co tiep tuc tim nua khong???\n1. Co\n2. Khong");
+    scanf("%d", &a);
+    }while(a==1);
+}
+
+int main()
+{
+    int chon, a=1;
+    sv[100];
+    do{
+    printf("1. Nhap danh sach sinh vien\n");
+    printf("2. In danh sach sinh vien\n");
+    printf("3. Tim kiem sinh vien theo ten\n");
+    printf("4. Tim kiem sinh vien theo ma\n");
+    printf("5. Sap xep theo ma\n");
+    printf("6. Thoat\n");
+    printf("Moi ban chon:\n");
+    scanf("%d", &chon);
+    switch(chon)
+    {
+    case 1:
+        nhap();
+        break;
+    case 2:
+        xuat();
+        break;
+    case 3:
+        tim_theoten();
+        break;
+    case 4:
+        tim_theoma();
+        break;
+    case 5:
+        sapxep_theoma(n);
+        break;
+    default:
+        printf("nhap khong dung!");
+        break;
+    }
+    printf("Co tiep tuc nua khong???\n1. Co\n2. Khong\n");
+    scanf("%d", &a);
+    }while(a==1);
+        return 0;
+}
