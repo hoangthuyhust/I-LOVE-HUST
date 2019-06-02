@@ -1,0 +1,220 @@
+#include<stdio.h>
+#include<string.h>
+#include<malloc.h>
+#include<conio.h>
+
+typedef struct
+{
+	char maSV[10];
+	char hoTen[50];
+	int tuoi;
+	char lop[10];
+} SinhVien;
+
+struct tNode
+{
+	SinhVien Data;
+	struct tNode *Next;
+};
+typedef struct tNode Node;
+
+typedef struct 
+{
+	Node *Head;
+	Node *Tail;
+} list;
+
+int createList(list &l)
+{
+	l.Head=l.Tail=NULL;
+}
+
+Node *getNode()
+{
+	Node *p;
+	p=(Node*)malloc(sizeof(Node));
+	if(p==NULL)
+		{
+			printf("\nLoi cap phat bo nho!");
+			return NULL;
+		}
+	else
+	{
+		printf("MSV : ");
+		fflush(stdin);
+		gets(p->Data.maSV);
+		printf("\nHo ten : ");
+		fflush(stdin);
+		gets(p->Data.hoTen);
+		printf("\nTuoi : ");
+		fflush(stdin);
+		scanf("%d",&p->Data.tuoi);
+		printf("\nLop : ");
+		fflush(stdin);
+		gets(p->Data.lop);
+	}
+	p->Next=NULL;
+	
+	return p;
+}
+void addNewList(list &l)
+{
+	int a;;
+	int stt=0;
+	Node *p;
+	p=(Node*)malloc(sizeof(Node));
+	l.Head=p;
+	do{
+		printf("\nNhap thong tin sinh vien %d\n",++stt);
+		p->Next=(Node*)malloc(sizeof(Node));
+		p->Next=getNode();
+		p=p->Next;
+		printf("\nBan co muon nhap nua khong ???\n1.Co\n2.Khong\n");
+		scanf("%d", &a);
+	}while(a==1);
+	l.Tail=p;
+}
+void print(list l)
+{
+	Node *p;
+	p=l.Head;
+	p=p->Next;
+	printf("\n________________________________________________");
+	printf("\n|MaSV  |Ho ten                  |Tuoi  |Lop    |");
+	printf("\n|______|________________________|______|_______|");
+	while(p!=NULL)
+	{
+		printf("\n|%-6s|%-24s|%-6d|%-7s|",p->Data.maSV,p->Data.hoTen,p->Data.tuoi,p->Data.lop);
+		printf("\n|______|________________________|______|_______|");
+		p=p->Next;
+	}
+}
+void searchByName(list l)
+{
+	char name[50];
+	printf("\nNhap ten sinh vien can tim kiem : ");
+	fflush(stdin);
+	gets(name);
+	Node *p;
+	p=l.Head;
+	p->Next;
+	while(p!=NULL)
+	{
+		if(strcmp(p->Data.hoTen,name)==0)
+		{
+			printf("\nTim thay sinh vien %s trong danh sach!",name);
+			printf("\n________________________________________________");
+			printf("\n|MaSV  |Ho ten                  |Tuoi  |Lop    |");
+			printf("\n|______|________________________|______|_______|");
+			printf("\n|%-6s|%-24s|%-6d|%-7s|",p->Data.maSV,p->Data.hoTen,p->Data.tuoi,p->Data.lop);
+			printf("\n|______|________________________|______|_______|");
+			break;
+		}
+		p=p->Next;
+	}
+	if(p==NULL)
+		printf("\nKhong tim thay sinh vien %s trong danh sach",name);
+}
+void searchByCode(list l)
+{
+	Node *p;
+	p=l.Head;
+	p=p->Next;
+	char code[3];
+	printf("\nNhap ma sinh vien can tim kiem : ");
+	fflush(stdin);
+	gets(code);
+	while(p!=NULL)
+	{
+		if(strcmp(p->Data.maSV,code)==0)
+		{
+			printf("\nTim thay thong tin sinh vien ma %s",code);
+			printf("\n________________________________________________");
+			printf("\n|MaSV  |Ho ten                  |Tuoi  |Lop    |");
+			printf("\n|______|________________________|______|_______|");
+			printf("\n|%-6s|%-24s|%-6d|%-7s|",p->Data.maSV,p->Data.hoTen,p->Data.tuoi,p->Data.lop);
+			printf("\n|______|________________________|______|_______|");
+			break;
+		}
+		p=p->Next;
+	}
+	if(p==NULL)
+		printf("\nKhong tim thay sinh vien ma %s!",code);
+}
+void sortByCode(list l)
+{
+	tNode *p;
+	tNode *q;
+	p=l.Head;
+	p=p->Next;
+	while(p->Next!=NULL)
+	{
+		q=p->Next;
+		while(q!=NULL)
+		{
+			if(strcmp(p->Data.maSV,q->Data.maSV)>0)
+			{
+				Node *td;
+				td=(Node*)malloc(sizeof(Node));
+				strcpy(td->Data.maSV,p->Data.maSV);
+				strcpy(td->Data.hoTen,p->Data.hoTen);
+				td->Data.tuoi=p->Data.tuoi;
+				strcpy(td->Data.lop,p->Data.lop);
+				strcpy(p->Data.maSV,q->Data.maSV);
+				strcpy(p->Data.hoTen,q->Data.hoTen);
+				p->Data.tuoi=q->Data.tuoi;
+				strcpy(p->Data.lop,q->Data.lop);
+				strcpy(q->Data.maSV,td->Data.maSV);
+				strcpy(q->Data.hoTen,td->Data.hoTen);
+				q->Data.tuoi=td->Data.tuoi;
+				strcpy(q->Data.lop,td->Data.lop);
+				
+			}
+			q=q->Next;
+		}
+		p=p->Next;
+	}
+}
+
+int main()
+{
+	int chon;
+	
+	SinhVien sv;
+	list l;
+	int a;
+	do
+	{
+		printf("Moi ban chon:\n");
+		printf("1.Nhap danh sach sinh vien\n");
+		printf("2.In danh sach sinh vien\n");
+		printf("3.Tim kiem sinh vien theo ma sinh vien\n");
+		printf("4.Tim kiem sinh vien theo ten\n");
+		printf("5.Sap xep danh sach sinh vien theo ma sinh vien\n");
+		scanf("%d", &chon);
+		switch(chon)
+		{
+			case 1:
+				addNewList(l);
+				break;
+			case 2:
+				print(l);
+				break;
+			case 3:
+				searchByName(l);
+				break;
+			case 4:
+				searchByCode(l);
+				break;
+			case 5:
+				sortByCode(l);
+				print(l);
+				break;			
+		}
+		printf("\nBan co tiep tuc nua khong???\n1.Co\n2.Khong\n");
+		scanf("%d", &a);
+	}while(a==1);
+	
+	return 0;
+}
+
